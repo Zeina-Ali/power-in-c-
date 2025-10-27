@@ -1,0 +1,172 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+const int SIZE = 50;
+
+// --- الدوال المساعدة ---
+void fillArray(int arr[], int start, int end) {
+    cout << "Enter " << (end - start + 1) << " numbers:\n";
+    for (int i = start; i < end && i < SIZE; i++) {
+        cout << "arr[" << i << "] = ";
+        cin >> arr[i];
+    }
+}
+
+void updateData(int arr[], int pos, int value) {
+    if (pos >= 0 && pos < SIZE)
+        arr[pos] = value;
+    else
+        cout << "Invalid position!\n";
+}
+
+void deleteData(int arr[], int pos) {
+    if (pos >= 0 && pos < SIZE)
+        arr[pos] = 0;
+    else
+        cout << "Invalid position!\n";
+}
+
+void copyArray(int source[], int dest[]) {
+    for (int i = 0; i < SIZE; i++)
+        dest[i] = source[i];
+    cout << "Array copied successfully.\n";
+}
+
+double averageEven(int arr[]) {
+    int sum = 0, count = 0;
+    for (int i = 0; i < SIZE; i++) {
+        if (arr[i] % 2 == 0 && arr[i] != 0) {
+            sum += arr[i];
+            count++;
+        }
+    }
+    if (count == 0) return 0;
+    return (double)sum / count;
+}
+
+void printOdd(int arr[]) {
+    cout << "Odd numbers: ";
+    for (int i = 0; i < SIZE; i++) {
+        if (arr[i] % 2 != 0)
+            cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+void printFactorsOf6(int arr[]) {
+    cout << "Numbers that are factors of 6: ";
+    for (int i = 0; i < SIZE; i++) {
+        if (arr[i] != 0 && 6 % arr[i] == 0)
+            cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+void saveToFile(int arr[]) {
+    ofstream file("grades.txt");
+    if (!file) {
+        cout << "Error opening file!\n";
+        return;
+    }
+    for (int i = 0; i < SIZE; i++)
+        file << arr[i] << " ";
+    file.close();
+    cout << "Data saved to file successfully.\n";
+}
+
+void readFromFile(int arr[]) {
+    ifstream file("grades.txt");
+    if (!file) {
+        cout << "Error reading file!\n";
+        return;
+    }
+    for (int i = 0; i < SIZE; i++)
+        file >> arr[i];
+    file.close();
+    cout << "Data loaded from file successfully.\n";
+}
+
+void printArray(int arr[]) {
+    for (int i = 0; i < SIZE; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+int main() {
+    int arr[SIZE] = {0};
+    int copy[SIZE] = {0};
+    int choice;
+
+    do {
+        cout << "\n===== Grading Project Menu =====\n";
+        cout << "1. Fill data in range\n";
+        cout << "2. Update specific position\n";
+        cout << "3. Delete (make 0) specific position\n";
+        cout << "4. Copy data to new array\n";
+        cout << "5. Calculate average of even numbers\n";
+        cout << "6. Print odd numbers\n";
+        cout << "7. Print numbers that are factors of 6\n";
+        cout << "8. Save array to file\n";
+        cout << "9. Read array from file\n";
+        cout << "10. Print current array\n";
+        cout << "11. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1: {
+            int start, end;
+            cout << "Enter start and end positions: ";
+            cin >> start >> end;
+            fillArray(arr, start, end);
+            break;
+        }
+        case 2: {
+            int pos, val;
+            cout << "Enter position and new value: ";
+            cin >> pos >> val;
+            updateData(arr, pos, val);
+            break;
+        }
+        case 3: {
+            int pos;
+            cout << "Enter position to delete: ";
+            cin >> pos;
+            deleteData(arr, pos);
+            break;
+        }
+        case 4:
+            copyArray(arr, copy);
+            break;
+        case 5:
+            cout << "Average of even numbers = " << averageEven(arr) << endl;
+            break;
+        case 6:
+            printOdd(arr);
+            break;
+        case 7:
+            printFactorsOf6(arr);
+            break;
+        case 8:
+            saveToFile(arr);
+            break;
+        case 9:
+            readFromFile(arr);
+            break;
+        case 10:
+            printArray(arr);
+            break;
+        case 11:
+            cout << "Exiting program...\n";
+            break;
+        default:
+            cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 11);
+
+    return 0;
+}
+
+
