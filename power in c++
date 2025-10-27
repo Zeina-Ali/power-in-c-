@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+
+// دالة لحساب القوة
+int power(int base, int exponent) {
+    int result = 1;  // نبدأ من 1 لأن أي عدد مرفوع للأس 0 يساوي 1
+    for (int i = 1; i <= exponent; i++) {
+        result *= base; // نضرب النتيجة بالعدد الأساسي في كل تكرار
+    }
+    return result;
+}
+
+int main() {
+    int base, exponent;
+
+    cout << "Input the base: ";
+    cin >> base;
+
+    cout << "Input the exponent: ";
+    cin >> exponent;
+
+    int result = power(base, exponent);
+
+    cout << "Power : " << base << " ^ " << exponent << " = " << result << endl;
+
+    return 0;
+}
